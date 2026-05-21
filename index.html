@@ -267,7 +267,7 @@ body::before{
   <a href="gift.html" class="cta-button" id="openGift">
     Ouvre ton cadeau <span class="cta-arrow">→</span>
   </a>
-  
+
   <div class="scroll-hint">
     <div class="scroll-dot"></div>
   </div>
@@ -366,12 +366,24 @@ function burst(n=140){
 }
 
 /* ── OPEN GIFT ── */
-document.getElementById('openGift').addEventListener('click',e=>{
+/* ── OPEN GIFT ── */
+document.getElementById('openGift').addEventListener('click', e => {
   e.preventDefault();
+  const audio = document.getElementById('bgMusic');
+  
+  // Jouer la musique EN PREMIER, dans le même tick que le clic
+  const playPromise = audio.play();
+  
+  // Lancer le confetti après
   burst(180);
-  const audio=document.getElementById('bgMusic');
-  audio.play().catch(()=>{});
-  setTimeout(()=>{window.location.href='gift.html'},900);
+  
+  // Rediriger après 900ms, en passant l'état audio via sessionStorage
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {});
+  }
+  
+  sessionStorage.setItem('musicTime', '0');
+  setTimeout(() => { window.location.href = 'gift.html'; }, 900);
 });
 
 /* ── AUDIO TOGGLE ── */
