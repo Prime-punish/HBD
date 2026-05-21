@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ton Cadeau ✨ — Shaïna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --night:#05050f;
+  --gold:#e8c56d;
+  --gold-pale:#f5dfa0;
+  --gold-dim:rgba(232,197,109,0.12);
+  --gold-glow:rgba(232,197,109,0.35);
+  --cream:#faf4e8;
+  --muted:rgba(250,244,232,0.5);
+  --border:rgba(232,197,109,0.25);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Crimson Pro',serif;
+  background:var(--night);
+  color:var(--cream);
+  overflow-x:hidden;
+  line-height:1.85;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.45;z-index:1;pointer-events:none;
+}
+
+#bg-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ── SECTIONS ── */
+section{position:relative;z-index:2}
+
+.back-btn{
+  position:fixed;top:1.5rem;left:1.5rem;
+  font-family:'Cinzel',serif;font-size:0.78rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(5,5,15,0.7);
+  border:1px solid var(--border);
+  padding:0.55rem 1.2rem;
+  border-radius:1px;
+  text-decoration:none;
+  z-index:100;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+}
+.back-btn:hover{background:var(--gold-dim);box-shadow:0 0 20px var(--gold-glow)}
+
+.audio-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(5,5,15,0.7);
+  border:1px solid var(--border);
+  color:var(--gold);
+  display:flex;justify-content:center;align-items:center;
+  cursor:pointer;z-index:100;font-size:1.2rem;
+  transition: all 0.3s;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.audio-btn:hover{background:var(--gold-dim);box-shadow:0 0 20px var(--gold-glow)}
+
+/* ── SECTION LOVE ── */
+.s-love{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:clamp(3rem,8vw,6rem) clamp(1.5rem,5vw,3rem);
+}
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1s cubic-bezier(0.22,1,0.36,1),transform 1s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.in.delay-1{transition-delay:0.15s}
+.reveal.in.delay-2{transition-delay:0.3s}
+
+.s-love .ornament{
+  font-family:'Cinzel',serif;
+  font-size:0.8rem;letter-spacing:0.7em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:2rem;
+}
+
+.love-text{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(1.3rem,2.8vw,1.9rem);
+  font-style:italic;
+  font-weight:400;
+  max-width:680px;
+  line-height:2;
+  color:var(--cream);
+}
+.love-text + .love-text{margin-top:2rem}
+
+.heart{
+  font-size:3rem;
+  margin:2.5rem auto;
+  animation:heartbeat 2s ease-in-out infinite;
+  display:block;
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  14%{transform:scale(1.12)}
+  28%{transform:scale(1)}
+  42%{transform:scale(1.07)}
+  70%{transform:scale(1)}
+}
+
+/* ── SECTION CAKE ── */
+.s-cake{
+  min-height:80vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:4rem 2rem;
+}
+
+.clock{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.8rem,5vw,3rem);
+  color:var(--gold);
+  letter-spacing:0.1em;
+  text-shadow:0 0 30px var(--gold-glow);
+  margin-bottom:0.5rem;
+}
+.clock-sub{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2vw,1.35rem);
+  color:var(--muted);
+  margin-bottom:3rem;
+}
+
+.cake-prompt{
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.9rem,2vw,1.15rem);
+  letter-spacing:0.12em;
+  color:var(--gold-pale);
+  text-transform:uppercase;
+  margin-bottom:2.5rem;
+  opacity:0.85;
+}
+
+/* cake SVG wrapper */
+.cake-wrap{
+  cursor:pointer;
+  transition:transform 0.3s ease;
+  user-select:none;
+}
+.cake-wrap:hover{transform:scale(1.04)}
+.cake-wrap:active{transform:scale(0.97)}
+
+.flame{
+  transform-origin:50% 100%;
+  animation:flicker 0.12s ease-in-out infinite alternate;
+}
+@keyframes flicker{
+  0%{transform:scaleX(1) scaleY(1) rotate(-1deg)}
+  100%{transform:scaleX(0.92) scaleY(1.08) rotate(1deg)}
+}
+.flame.blown{
+  animation:blowOut 0.5s ease-out forwards;
+}
+@keyframes blowOut{
+  0%{transform:scaleX(1) scaleY(1);opacity:1}
+  60%{transform:scaleX(2) scaleY(0.5) translateX(8px);opacity:0.5}
+  100%{transform:scaleX(0) scaleY(0);opacity:0}
+}
+
+.wish-msg{
+  margin-top:2rem;
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2vw,1.3rem);
+  color:var(--muted);
+  opacity:0;
+  transition:opacity 1s ease;
+}
+.wish-msg.shown{opacity:1}
+
+/* ── SECTION WORDS ── */
+.s-words{
+  min-height:60vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  position:relative;overflow:hidden;
+  padding:3rem 2rem;
+}
+.word-cloud{
+  display:flex;flex-wrap:wrap;gap:1.2rem 2rem;
+  justify-content:center;align-items:center;
+  max-width:600px;
+}
+.word{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:clamp(1rem,2.5vw,1.6rem);
+  color:var(--gold);
+  letter-spacing:0.05em;
+  opacity:0;
+  transform:translateY(20px) scale(0.9);
+  transition:opacity 0.8s ease,transform 0.8s cubic-bezier(0.22,1,0.36,1);
+  text-shadow:0 0 20px var(--gold-glow);
+}
+.word.appear{opacity:1;transform:translateY(0) scale(1)}
+.word:nth-child(2n){color:var(--gold-pale);font-style:normal;font-size:clamp(0.8rem,2vw,1.1rem);letter-spacing:0.2em}
+
+/* ── SECTION FINAL ── */
+.s-final{
+  min-height:90vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:clamp(3rem,8vw,6rem) clamp(1.5rem,5vw,3rem);
+}
+
+.photo-frame{
+  width:clamp(180px,45vw,340px);
+  height:clamp(180px,45vw,340px);
+  margin-bottom:3rem;
+  position:relative;
+}
+.photo-frame::before,
+.photo-frame::after{
+  content:'';
+  position:absolute;
+  border:1px solid var(--gold);
+  border-radius:2px;
+  transition:transform 0.6s ease;
+}
+.photo-frame::before{inset:8px;opacity:0.5}
+.photo-frame::after{inset:0;box-shadow:0 0 40px var(--gold-glow),inset 0 0 40px rgba(232,197,109,0.05)}
+.photo-frame:hover::before{transform:translate(4px,4px)}
+
+.photo-inner{
+  width:100%;height:100%;
+  border-radius:2px;
+  overflow:hidden;
+  background:linear-gradient(135deg,rgba(232,197,109,0.08),rgba(201,148,74,0.04));
+  display:flex;justify-content:center;align-items:center;
+}
+.photo-inner img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform 0.8s cubic-bezier(0.22,1,0.36,1);
+  filter:sepia(8%) saturate(1.1);
+}
+.photo-frame:hover img{transform:scale(1.05)}
+
+.final-text{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.2rem,2.5vw,1.75rem);
+  max-width:640px;
+  line-height:2;
+  color:rgba(250,244,232,0.88);
+  margin-bottom:2.5rem;
+}
+
+.signature{
+  font-family:'Cinzel',serif;
+  font-size:clamp(1.1rem,2.5vw,1.5rem);
+  font-weight:600;
+  letter-spacing:0.08em;
+  color:var(--gold);
+  text-shadow:0 0 20px var(--gold-glow);
+  margin-bottom:1rem;
+}
+.dev-note{
+  font-size:0.82rem;
+  color:var(--muted);
+  letter-spacing:0.08em;
+  margin-top:3rem;
+  font-family:'Crimson Pro',serif;
+  font-style:italic;
+}
+
+/* ── SEPARATORS ── */
+.sep{
+  width:min(280px,70vw);
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+  margin:0 auto;
+  opacity:0.4;
+}
+.sep-gem{
+  text-align:center;
+  color:var(--gold);
+  font-size:0.7rem;
+  letter-spacing:1rem;
+  margin:1.5rem 0;
+  opacity:0.5;
+}
+
+/* ── CONFETTI ── */
+.confetti-piece{
+  position:fixed;
+  top:-10px;z-index:200;
+  animation:cFall linear forwards;
+  pointer-events:none;
+}
+@keyframes cFall{
+  to{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<a href="index.html" class="back-btn">← Retour</a>
+<div class="audio-btn" id="audioBtn">♪</div>
+<audio id="bgMusic" loop>
+  <source src="Ed Sheeran - Perfect (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
+</audio>
+
+<!-- LOVE MESSAGE -->
+<section class="s-love">
+  <p class="ornament reveal">✦ &nbsp; Pour Shaïna &nbsp; ✦</p>
+
+  <p class="love-text reveal delay-1">
+    Nos chemins ne se croisent pas tous les jours, et nos échanges sont parfois brefs, 
+    comme volés au tumulte du quotidien. Pourtant, il y a une beauté singulière dans cette rareté : 
+    chaque fois que nous nous parlons, le temps semble décider de faire une pause, 
+    comme pour simplement laisser à ce moment d'exister.
+  </p>
+
+  <!-- Transition douce ajoutée ici -->
+  <p class="love-text reveal delay-2">
+    Et c’est précisément dans ces instants suspendus que je réalise à quel point ta présence m'apaise. 
+    Il me suffit de quelques minutes d'échange avec toi pour que mes pensées s'éclaircissent. 
+    C’est une sensation douce, presque invisible, mais tellement précieuse : celle de se sentir bien, 
+    simplement parce que tu es là, telle que tu es.
+  </p>
+
+  <span class="heart reveal delay-3">💛</span>
+
+  <p class="love-text reveal delay-3">
+    Pour cette nouvelle année, je te souhaite une vie à la hauteur de tes rêves. 
+    Que chaque jour t'apporte son lot de surprises heureuses, que ta route soit bordée de succès, 
+    de santé et de ces petits bonheurs simples qui rendent l'âme légère. 
+    Continue d'être cette personne lumineuse qui inspire sans même essayer.
+  </p>
+
+  <!-- La déclaration finale (Silhouette) -->
+  <p class="love-text reveal delay-3" style="font-size: 0.95em; margin-top: 2rem; color: var(--gold-pale);">
+    Tu es spéciale à mes yeux, Shaïna.
+    Et si je dois être honnête jusqu’au bout... sache que mon cœur bat un peu plus fort
+    quand ton nom apparaît sur mon écran, ou simplement au hasard d’une silhouette qui est la tienne.
+  </p>
+
+  <p class="love-text reveal delay-3" style="font-size: 0.85em; opacity: 0.7; margin-top: 2.5rem; font-style: italic;">
+    (Descends doucement... ton gâteau t'attend plus bas 👇)
+  </p>
+</section>
+
+<div class="sep"></div>
+<div class="sep-gem">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- CAKE -->
+<section class="s-cake">
+  <div class="clock" id="clock"></div>
+  <p class="clock-sub">et en ce moment précis, je pense à toi.</p>
+
+  <p class="cake-prompt">Tape sur le gâteau pour Souffler la bougie &amp; fais un vœu</p>
+
+  <div class="cake-wrap" id="cakeWrap" role="button" aria-label="Souffler la bougie">
+    <svg width="180" height="200" viewBox="0 0 180 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- FLAME -->
+      <g id="flame" class="flame">
+        <ellipse cx="90" cy="62" rx="9" ry="16" fill="url(#fg1)"/>
+        <ellipse cx="90" cy="68" rx="5" ry="9" fill="#fff9e0" opacity="0.8"/>
+        <ellipse cx="90" cy="58" rx="12" ry="18" fill="url(#fg2)" opacity="0.4"/>
+      </g>
+      <!-- CANDLE -->
+      <rect x="83" y="78" width="14" height="42" rx="2" fill="url(#cg)"/>
+      <!-- FROSTING DRIPS -->
+      <path d="M20 108 Q30 96 45 108 Q60 96 75 108 Q90 96 105 108 Q120 96 135 108 Q150 96 160 108 L160 120 L20 120 Z" fill="#fff8e1" opacity="0.9"/>
+      <!-- CAKE LAYER 2 -->
+      <rect x="20" y="118" width="140" height="36" rx="4" fill="url(#ck2)"/>
+      <!-- CAKE LAYER 1 -->
+      <rect x="12" y="152" width="156" height="44" rx="6" fill="url(#ck1)"/>
+      <!-- DECORATION DOTS -->
+      <circle cx="52" cy="140" r="4" fill="#e8c56d" opacity="0.8"/>
+      <circle cx="90" cy="140" r="4" fill="#e8c56d" opacity="0.8"/>
+      <circle cx="128" cy="140" r="4" fill="#e8c56d" opacity="0.8"/>
+      <!-- BOTTOM BORDER -->
+      <rect x="12" y="192" width="156" height="4" rx="2" fill="#c9944a" opacity="0.4"/>
+
+      <defs>
+        <radialGradient id="fg1" cx="50%" cy="80%" r="50%">
+          <stop offset="0%" stop-color="#fff5a0"/>
+          <stop offset="60%" stop-color="#ffad33"/>
+          <stop offset="100%" stop-color="#ff6020"/>
+        </radialGradient>
+        <radialGradient id="fg2" cx="50%" cy="100%" r="50%">
+          <stop offset="0%" stop-color="#ffcc44" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#ff6020" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="cg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f7d59a"/>
+          <stop offset="40%" stop-color="#fcecd0"/>
+          <stop offset="100%" stop-color="#e8a040"/>
+        </linearGradient>
+        <linearGradient id="ck2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f5dfa0"/>
+          <stop offset="100%" stop-color="#d4952a"/>
+        </linearGradient>
+        <linearGradient id="ck1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e8c56d"/>
+          <stop offset="100%" stop-color="#a86820"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <p class="wish-msg" id="wishMsg">
+    🎂 &nbsp; Joyeux Anniversaire Shaïna ! Que tous tes vœux se réalisent &nbsp; ✨
+  </p>
+</section>
+
+<div class="sep"></div>
+<div class="sep-gem">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- WORDS -->
+<section class="s-words">
+  <div class="word-cloud" id="wordCloud">
+    <span class="word">Lumineuse</span>
+    <span class="word">UNIQUE</span>
+    <span class="word">Précieuse</span>
+    <span class="word">INSPIRANTE</span>
+    <span class="word">Magnifique</span>
+    <span class="word">RAYONNANTE</span>
+    <span class="word">Extraordinaire</span>
+    <span class="word">SOLEIL</span>
+    <span class="word">Éblouissante</span>
+  </div>
+</section>
+
+<div class="sep"></div>
+<div class="sep-gem">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- FINAL -->
+<section class="s-final">
+  <div class="photo-frame reveal">
+    <div class="photo-inner">
+      <img src="Shaïna.jpeg" alt="Photo de Shaïna" id="photo">
+    </div>
+  </div>
+
+  <p class="final-text reveal">
+    Que cette nouvelle année de ta vie soit aussi belle que le sourire que tu m'offres.
+    Puisses-tu continuer à briller de mille feux, car le monde a besoin de ta lumière.
+  </p>
+
+  <p class="signature reveal">Avec tout mon amour, Christian 💛</p>
+
+  <div class="sep" style="margin-top:3rem"></div>
+  <p class="dev-note">Fait avec ♡ et quelques lignes de code par un développeur qui pense à toi</p>
+</section>
+
+<script>
+/* ── CANVAS STARFIELD ── */
+(function(){
+  const c=document.getElementById('bg-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight}
+  function init(){
+    stars=[];
+    for(let i=0;i<260;i++) stars.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*1.8+0.3,
+      a:Math.random()*0.55+0.1,
+      spd:Math.random()*0.006+0.002,
+      ph:Math.random()*Math.PI*2
+    });
+  }
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W*0.75);
+    g.addColorStop(0,'rgba(25,15,55,0.55)');g.addColorStop(1,'rgba(5,5,15,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    t+=0.01;
+    stars.forEach(s=>{
+      const a=s.a*(0.4+0.6*Math.sin(t*s.spd*50+s.ph));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(248,238,210,${a})`;ctx.fill();
+      if(s.r>1.2&&a>0.45){
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r*2.8,0,Math.PI*2);
+        ctx.fillStyle=`rgba(232,197,109,${a*0.1})`;ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{resize();init()});
+  resize();init();draw();
+})();
+
+/* ── CLOCK ── */
+function tick(){
+  const n=new Date();
+  const pad=x=>String(x).padStart(2,'0');
+  document.getElementById('clock').textContent=`Il est ${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+}
+tick();setInterval(tick,1000);
+
+/* ── REVEAL ON SCROLL ── */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('in');
+  });
+},{threshold:0.2});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* ── WORDS APPEAR ── */
+const wordObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const words=e.target.querySelectorAll('.word');
+      words.forEach((w,i)=>setTimeout(()=>w.classList.add('appear'),i*150));
+      wordObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+const cloud=document.getElementById('wordCloud');
+if(cloud) wordObs.observe(cloud);
+
+/* ── CANDLE ── */
+let blown=false;
+document.getElementById('cakeWrap').addEventListener('click',()=>{
+  if(blown) return;
+  blown=true;
+  const flame=document.getElementById('flame');
+  flame.classList.add('blown');
+  burst(60);
+  const msg=document.getElementById('wishMsg');
+  setTimeout(()=>msg.classList.add('shown'),800);
+});
+
+/* ── CONFETTI ── */
+function burst(n){
+  const hues=['#e8c56d','#f5dfa0','#faf4e8','#c9944a','#fff5cc'];
+  for(let i=0;i<n;i++) setTimeout(()=>{
+    const el=document.createElement('div');
+    el.className='confetti-piece';
+    el.style.cssText=`left:${Math.random()*100}vw;background:${hues[Math.floor(Math.random()*hues.length)]};border-radius:${Math.random()<.4?'50%':'2px'};animation-duration:${2+Math.random()*2.5}s;width:${5+Math.random()*7}px;height:${5+Math.random()*7}px;opacity:${.5+Math.random()*.5}`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),5500);
+  },i*28);
+}
+
+/* ── AUDIO ── */
+(function(){
+  const btn=document.getElementById('audioBtn');
+  const audio=document.getElementById('bgMusic');
+  let on=false;
+  window.addEventListener('load',()=>{
+    audio.play().then(()=>{on=true;btn.textContent='♬';btn.style.color='#f5dfa0'}).catch(()=>{});
+  });
+  btn.addEventListener('click',()=>{
+    on=!on;
+    on?(audio.play().catch(()=>{}),btn.textContent='♬',btn.style.color='#f5dfa0')
+      :(audio.pause(),btn.textContent='♪',btn.style.color='');
+  });
+})();
+
+/* ── INITIAL CONFETTI ── */
+setTimeout(()=>burst(80),500);
+</script>
+</body>
+</html>

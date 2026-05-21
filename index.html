@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyeux Anniversaire Shaïna ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --night:#05050f;
+  --deep:#0c0c22;
+  --gold:#e8c56d;
+  --gold-pale:#f5dfa0;
+  --gold-dim:rgba(232,197,109,0.15);
+  --gold-glow:rgba(232,197,109,0.4);
+  --cream:#faf4e8;
+  --text-muted:rgba(250,244,232,0.55);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Crimson Pro',serif;
+  background:var(--night);
+  color:var(--cream);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── CANVAS BACKGROUND ── */
+#bg-canvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.5;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:2rem;
+  z-index:2;
+}
+
+.hero-ornament{
+  font-size:clamp(1rem,2vw,1.3rem);
+  letter-spacing:0.6em;
+  color:var(--gold);
+  opacity:0;
+  animation:riseIn 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+  text-transform:uppercase;
+  font-family:'Cinzel',serif;
+}
+
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.8rem,9vw,6.5rem);
+  font-weight:600;
+  letter-spacing:0.05em;
+  line-height:1.05;
+  margin:1.2rem 0 0.5rem;
+  background:linear-gradient(160deg,var(--gold-pale) 0%,var(--gold) 40%,#c9944a 80%,var(--gold) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:0;
+  animation:riseIn 1.4s cubic-bezier(0.22,1,0.36,1) 0.8s forwards;
+}
+
+.hero-name{
+  display:block;
+  font-size:clamp(4rem,14vw,10rem);
+  font-style:italic;
+  font-weight:400;
+  line-height:0.9;
+}
+
+.hero-subtitle{
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.5vw,1.6rem);
+  color:var(--text-muted);
+  letter-spacing:0.12em;
+  margin-bottom:3.5rem;
+  opacity:0;
+  animation:riseIn 1.4s cubic-bezier(0.22,1,0.36,1) 1.5s forwards;
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:1.2rem;
+  width:min(320px,80vw);
+  margin:0 auto 3rem;
+  opacity:0;
+  animation:riseIn 1.2s ease 1.2s forwards;
+}
+.divider-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.divider-gem{
+  width:8px;height:8px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  box-shadow:0 0 12px var(--gold-glow);
+}
+
+.cta-button{
+  display:inline-flex;
+  align-items:center;
+  gap:0.8rem;
+  padding:1rem 2.8rem;
+  font-family:'Cinzel',serif;
+  font-size:clamp(0.85rem,1.5vw,1rem);
+  font-weight:600;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--night);
+  background:linear-gradient(135deg,var(--gold-pale),var(--gold),#c9944a);
+  border:none;
+  border-radius:2px;
+  cursor:pointer;
+  text-decoration:none;
+  opacity:0;
+  animation:riseIn 1.2s ease 2.2s forwards;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow:0 0 0 1px var(--gold), 0 8px 30px rgba(232,197,109,0.25);
+}
+.cta-button::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.3),transparent);
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.cta-button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 1px var(--gold-pale),0 12px 40px rgba(232,197,109,0.45);
+}
+.cta-button:hover::before{opacity:1}
+.cta-arrow{
+  transition:transform 0.3s ease;
+  font-size:1.1em;
+}
+.cta-button:hover .cta-arrow{transform:translateX(4px)}
+
+/* ── SCROLL HINT ── */
+.scroll-hint{
+  position:absolute;
+  bottom:2.5rem;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.5rem;
+  color:var(--text-muted);
+  font-family:'EB Garamond',serif;
+  font-style:italic;
+  font-size:0.85rem;
+  letter-spacing:0.15em;
+  opacity:0;
+  animation:riseIn 1s ease 3s forwards;
+}
+.scroll-dot{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{transform:scaleY(1);opacity:0.6}
+  50%{transform:scaleY(1.3);opacity:1}
+}
+
+/* ── AUDIO BUTTON ── */
+.audio-btn{
+  position:fixed;
+  bottom:1.5rem;right:1.5rem;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:rgba(232,197,109,0.08);
+  border:1px solid rgba(232,197,109,0.35);
+  color:var(--gold);
+  display:flex;justify-content:center;align-items:center;
+  cursor:pointer;
+  z-index:100;
+  font-size:1.2rem;
+  transition:all 0.3s ease;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.audio-btn:hover{
+  background:var(--gold-dim);
+  border-color:var(--gold);
+  box-shadow:0 0 20px var(--gold-glow);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── CONFETTI ── */
+.confetti-piece{
+  position:fixed;
+  width:8px;height:8px;
+  top:-10px;
+  z-index:200;
+  animation:confettiFall linear forwards;
+  pointer-events:none;
+}
+@keyframes confettiFall{
+  to{transform:translateY(100vh) rotate(600deg);opacity:0}
+}
+
+@media(max-width:600px){
+  .cta-button{padding:0.9rem 2rem;letter-spacing:0.15em}
+  .audio-btn{bottom:1rem;right:1rem}
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<div class="audio-btn" id="audioBtn" title="Musique">♪</div>
+<audio id="bgMusic" loop>
+  <source src="Ed Sheeran - Perfect (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
+</audio>
+
+<section class="hero">
+  <div class="hero-ornament">✦ &nbsp;Joyeux&nbsp; ✦</div>
+  <h1>
+    Anniversaire
+    <span class="hero-name">Shaïna</span>
+  </h1>
+  <p class="hero-subtitle">Ce jour est aussi spécial que toi</p>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-gem"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <a href="gift.html" class="cta-button" id="openGift">
+    Ouvre ton cadeau <span class="cta-arrow">→</span>
+  </a>
+  
+  <div class="scroll-hint">
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<script>
+/* ── STARFIELD CANVAS ── */
+(function(){
+  const canvas=document.getElementById('bg-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,stars=[];
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+
+  function initStars(){
+    stars=[];
+    for(let i=0;i<280;i++){
+      const size=Math.random()*2.2+0.3;
+      stars.push({
+        x:Math.random()*W,
+        y:Math.random()*H,
+        r:size,
+        baseAlpha:Math.random()*0.6+0.15,
+        alpha:0,
+        speed:Math.random()*0.008+0.003,
+        phase:Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    /* nebula glow */
+    const grad=ctx.createRadialGradient(W*0.5,H*0.5,0,W*0.5,H*0.5,W*0.7);
+    grad.addColorStop(0,'rgba(30,20,60,0.6)');
+    grad.addColorStop(1,'rgba(5,5,15,0)');
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,W,H);
+
+    /* warm accent */
+    const g2=ctx.createRadialGradient(W*0.3,H*0.7,0,W*0.3,H*0.7,W*0.4);
+    g2.addColorStop(0,'rgba(200,140,40,0.06)');
+    g2.addColorStop(1,'rgba(5,5,15,0)');
+    ctx.fillStyle=g2;
+    ctx.fillRect(0,0,W,H);
+
+    t+=0.012;
+    stars.forEach(s=>{
+      s.alpha=s.baseAlpha*(0.5+0.5*Math.sin(t*s.speed*40+s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(250,240,215,${s.alpha})`;
+      ctx.fill();
+      /* shimmer for larger stars */
+      if(s.r>1.4&&s.alpha>0.5){
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r*2.5,0,Math.PI*2);
+        ctx.fillStyle=`rgba(232,197,109,${s.alpha*0.12})`;
+        ctx.fill();
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize',()=>{resize();initStars()});
+  resize();initStars();draw();
+})();
+
+/* ── CONFETTI ── */
+function burst(n=140){
+  const hues=['#e8c56d','#f5dfa0','#faf4e8','#c9944a','#fff8e7'];
+  for(let i=0;i<n;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='confetti-piece';
+      const shape=Math.random()<0.5?'50%':'2px';
+      el.style.cssText=`
+        left:${Math.random()*100}vw;
+        background:${hues[Math.floor(Math.random()*hues.length)]};
+        border-radius:${shape};
+        animation-duration:${2.5+Math.random()*2}s;
+        opacity:${0.5+Math.random()*0.5};
+        width:${6+Math.random()*6}px;
+        height:${6+Math.random()*6}px;
+      `;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),5000);
+    },i*30);
+  }
+}
+
+/* ── OPEN GIFT ── */
+document.getElementById('openGift').addEventListener('click',e=>{
+  e.preventDefault();
+  burst(180);
+  const audio=document.getElementById('bgMusic');
+  audio.play().catch(()=>{});
+  setTimeout(()=>{window.location.href='gift.html'},900);
+});
+
+/* ── AUDIO TOGGLE ── */
+(function(){
+  const btn=document.getElementById('audioBtn');
+  const audio=document.getElementById('bgMusic');
+  let on=false;
+  btn.addEventListener('click',()=>{
+    on=!on;
+    on?(audio.play().catch(()=>{}),btn.style.color='#f5dfa0'):(audio.pause(),btn.style.color='');
+    btn.textContent=on?'♬':'♪';
+  });
+})();
+</script>
+</body>
+</html>
